@@ -1,0 +1,32 @@
+<div
+  *ngIf="message"
+  class="fixed top-5 left-1/2 transform -translate-x-1/2 z-[9999] pointer-events-none"
+>
+  <div
+    [ngClass]="{
+      'bg-red-100 border-red-300 text-red-700': type === 'error',
+      'bg-green-100 border-green-300 text-green-700': type === 'success'
+    }"
+    class="px-6 py-4 rounded-lg flex items-center gap-2 shadow pointer-events-auto transition-all duration-300"
+  >
+    <svg
+      class="w-5 h-5"
+      [ngClass]="{
+        'text-red-600': type === 'error',
+        'text-green-600': type === 'success'
+      }"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M12 8v4m0 4h.01M12 2a10 10 0 100 20 10 10 0 000-20z"
+      />
+    </svg>
+    <span>{{ message }}</span>
+  </div>
+</div>

@@ -1,0 +1,53 @@
+<div class="bg-white w-full max-w-2xl p-10 rounded-2xl shadow-2xl">
+  <h2 class="text-2xl font-semibold mb-6 text-gray-800 text-center">Add New Idea</h2>
+
+  <form [formGroup]="ideaForm" (ngSubmit)="onSubmit()" class="space-y-6">
+    <!-- Title -->
+    <div>
+      <label class="block font-medium text-gray-700 mb-2 text-lg">Title</label>
+      <input
+        #titleInput
+        type="text"
+        maxlength="100"
+        formControlName="title"
+        class="w-full border border-gray-300 rounded-xl px-5 py-3 text-base focus:ring-4 focus:ring-blue-400 focus:outline-none transition-all"
+      />
+      <div *ngIf="f['title'].touched && f['title'].invalid" class="text-red-500 text-sm mt-2">
+        <span *ngIf="f['title'].errors?.['required']">Title is required.</span>
+        <span *ngIf="f['title'].errors?.['maxlength']">Max 100 characters.</span>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div>
+      <label class="block font-medium text-gray-700 mb-2 text-lg">Description</label>
+      <textarea
+        formControlName="description"
+        rows="5"
+        class="w-full border border-gray-300 rounded-xl px-5 py-3 text-base focus:ring-4 focus:ring-blue-400 focus:outline-none resize-none transition-all"
+      ></textarea>
+      <div *ngIf="f['description'].touched && f['description'].invalid" class="text-red-500 text-sm mt-2">
+        <span *ngIf="f['description'].errors?.['required']">Description is required.</span>
+        <span *ngIf="f['description'].errors?.['maxlength']">Max 200 characters.</span>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="flex justify-end space-x-4 pt-4">
+      <button
+        type="button"
+        (click)="onClose()"
+        class="px-5 py-3 text-base rounded-xl border border-gray-300 hover:bg-gray-100 transition-all"
+      >
+        Cancel
+      </button>
+      <button
+        type="submit"
+        [disabled]="ideaForm.invalid"
+        class="bg-blue-600 text-white px-6 py-3 text-base rounded-xl hover:bg-blue-700 transition-all disabled:opacity-50"
+      >
+        Save
+      </button>
+    </div>
+  </form>
+</div>
