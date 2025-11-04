@@ -27,17 +27,6 @@ export class TcHttpClient
         return this._httpClient.post(url,body,{headers : headers});
     }
 
-    public postWithoutHeaders(url: string,body: {}): Observable<any>
-    {
-        let headers = new HttpHeaders();
-        return this._httpClient.post(url,body,{headers : headers});
-    }
-
-    public getWithoutHeader(url: string): Observable<any>
-    {
-        return this._httpClient.get(url);
-    }
-
     public put(url: string,body: {}): Observable<any>
     {
         let headers = new HttpHeaders();
@@ -48,11 +37,6 @@ export class TcHttpClient
     {
         let headers = new HttpHeaders();
         return this._httpClient.delete(url,{headers : headers});
-    }
-
-    public putWithoutHeaders(url:string,body : {}): Observable<any>
-    {
-        return this._httpClient.put(url,body);
     }
 }
 

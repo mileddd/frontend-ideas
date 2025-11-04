@@ -6,7 +6,8 @@ interface Idea {
   description: string;
   vote_count: number;
   id: number,
-  created_at: Date
+  created_at: Date,
+  userVote: any
 }
 
 @Component({
@@ -54,9 +55,10 @@ export class IdeaListViewComponent implements OnInit {
   {
     this.ideaService.upvoteIdea(idea.id).subscribe({
       next: (res) => {
-        this.ideas = this.ideas.map(i =>
-        i.id === idea.id ? { ...i, vote_count: res.vote_count } : i
-        ).sort((a, b) => b.vote_count - a.vote_count);
+        // this.ideas = this.ideas.map(i =>
+        // i.id === idea.id ? { ...i, vote_count: res.vote_count } : i
+        // ).sort((a, b) => b.vote_count - a.vote_count);
+        this.updateIdeaVoteState(idea, 1, res.vote_count);
       },
       error: (err) => {
       }
@@ -67,13 +69,26 @@ export class IdeaListViewComponent implements OnInit {
   {
     this.ideaService.downvoteIdea(idea.id).subscribe({
       next: (res) => {
-        this.ideas = this.ideas.map(i =>
-        i.id === idea.id ? { ...i, vote_count: res.vote_count } : i
-        ).sort((a, b) => b.vote_count - a.vote_count);
+        // this.ideas = this.ideas.map(i =>
+        // i.id === idea.id ? { ...i, vote_count: res.vote_count } : i
+        // ).sort((a, b) => b.vote_count - a.vote_count);
+        this.updateIdeaVoteState(idea, -1, res.vote_count);
       },
       error: (err) => {
       }
     });
+  }
+
+  private updateIdeaVoteState(idea: any, type: 1 | -1, newCount: number) {
+    const updated = this.ideas.find(i => i.id === idea.id);
+    if (updated) {
+      updated.vote_count = newCount;
+      updated.userVote = (updated.userVote === type) ? 0 : type;
+    }
+
+    // Sort by votes descending
+    this.ideas = [...this.ideas].sort((a, b) => b.vote_count - a.vote_count);
+    console.log(this.ideas);
   }
 
 }

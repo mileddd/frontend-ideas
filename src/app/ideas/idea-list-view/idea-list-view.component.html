@@ -39,20 +39,22 @@
 
           <!-- Vote controls -->
           <div class="flex flex-col items-center ml-6">
-            <button
+             <button
               (click)="upvoteIdea(idea)"
-              class="text-green-600 hover:text-green-800 transition"
-              title="Upvote"
+              [class.text-emerald-500]="idea.userVote == 1"
+              class="flex items-center gap-1 text-gray-400 hover:text-emerald-500 transition font-semibold"
             >
-              👍
+              👍 <span>Boost</span>
             </button>
-            <span class="text-gray-700 font-medium my-1">{{ idea.vote_count }}</span>
+
+            <span class="text-gray-800 font-semibold my-1">{{ idea.vote_count }}</span>
+
             <button
               (click)="downvoteIdea(idea)"
-              class="text-red-600 hover:text-red-800 transition"
-              title="Downvote"
+              [class.text-rose-500]="idea.userVote == -1"
+              class="flex items-center gap-1 text-gray-400 hover:text-rose-500 transition font-semibold"
             >
-              👎
+              👎 <span>Pass</span>
             </button>
           </div>
         </li>

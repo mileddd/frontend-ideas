@@ -14,6 +14,6 @@ export class LoaderComponent {
   isLoading$: Observable<boolean>;
 
   constructor(private loaderService: LoaderService) {
-    this.isLoading$ = this.loaderService.isLoading$; // ✅ subscribe to observable
+    this.isLoading$ = this.loaderService.isLoading$;
   }
 }

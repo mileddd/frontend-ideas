@@ -1,7 +1,5 @@
-// global-error.component.ts
 import { Component } from '@angular/core';
 import { ErrorService, AlertType } from '../../services/error.service';
-import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -18,7 +16,7 @@ export class GlobalErrorComponent {
     this.errorService.alert$.subscribe(({ message, type }) => {
       this.message = message;
       this.type = type;
-      setTimeout(() => (this.message = null), 3000); // auto-hide
+      setTimeout(() => (this.message = null), 3000);
     });
   }
 }

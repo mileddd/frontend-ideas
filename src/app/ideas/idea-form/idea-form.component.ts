@@ -1,13 +1,7 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { IdeaService } from '../idea.service';
-import { CommonModule } from '@angular/common';
 import { ErrorService } from '../../services/error.service';
-
-interface Idea {
-  title: string;
-  description: string;
-}
 
 @Component({
   selector: 'app-idea-form',

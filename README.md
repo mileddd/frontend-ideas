@@ -6,6 +6,7 @@ Step-by-step setup instructions:
     2- After cloning the repository, checkout to the master branch : git checkout master
     3- Install the dependecies : npm install
     4- ng serve to run the app and the app will run on localhost:4200 by default
+    5- In order to login : username : "admin" , password: "123456"
 
 List of completed bonus features : 
     1- Include login page
