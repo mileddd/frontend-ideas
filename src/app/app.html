@@ -1,3 +1,6 @@
 <app-loader></app-loader>
 <app-global-error></app-global-error>
-<router-outlet></router-outlet>
+<app-profile *ngIf="!isLoginRoute" class="fixed top-0 left-0 w-full z-50 shadow-md"></app-profile>
+<div [ngClass]="{'pt-16': !isLoginRoute}">
+  <router-outlet></router-outlet>
+</div>

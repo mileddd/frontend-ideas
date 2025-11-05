@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IdeaService } from '../idea.service';
+import { ErrorService } from '../../services/error.service';
 
 interface Idea {
   title: string;
@@ -18,7 +19,7 @@ interface Idea {
 })
 export class IdeaListViewComponent implements OnInit {
   ideas: Idea[] = [];
-  constructor(private ideaService: IdeaService) { }
+  constructor(private ideaService: IdeaService,private errorService: ErrorService) { }
   showDialog = false;
 
   ngOnInit(): void {
@@ -33,6 +34,7 @@ export class IdeaListViewComponent implements OnInit {
           this.ideas = res;
         },
         error: (err) => {
+          this.errorService.showError(err.error?.error);
         }
       });
     })
@@ -47,7 +49,10 @@ export class IdeaListViewComponent implements OnInit {
   }
 
   addIdea(idea: any) {
+    idea.vote_count = idea.vote_count || 0;
+    idea.userVote = 0;
     this.ideas.unshift(idea);
+    this.updateIdeaVoteState(idea, 0 as 1 | -1, idea.vote_count);
     this.closeDialog();
   }
 
@@ -55,12 +60,10 @@ export class IdeaListViewComponent implements OnInit {
   {
     this.ideaService.upvoteIdea(idea.id).subscribe({
       next: (res) => {
-        // this.ideas = this.ideas.map(i =>
-        // i.id === idea.id ? { ...i, vote_count: res.vote_count } : i
-        // ).sort((a, b) => b.vote_count - a.vote_count);
         this.updateIdeaVoteState(idea, 1, res.vote_count);
       },
       error: (err) => {
+        this.errorService.showError(err.error?.error);
       }
     });
   }
@@ -69,17 +72,15 @@ export class IdeaListViewComponent implements OnInit {
   {
     this.ideaService.downvoteIdea(idea.id).subscribe({
       next: (res) => {
-        // this.ideas = this.ideas.map(i =>
-        // i.id === idea.id ? { ...i, vote_count: res.vote_count } : i
-        // ).sort((a, b) => b.vote_count - a.vote_count);
         this.updateIdeaVoteState(idea, -1, res.vote_count);
       },
       error: (err) => {
+        this.errorService.showError(err.error?.error);
       }
     });
   }
 
-  private updateIdeaVoteState(idea: any, type: 1 | -1, newCount: number) {
+  private updateIdeaVoteState(idea: any, type: 1 | -1 | 0, newCount: number) {
     const updated = this.ideas.find(i => i.id === idea.id);
     if (updated) {
       updated.vote_count = newCount;

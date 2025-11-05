@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from './login.service';
@@ -10,8 +10,9 @@ import { ErrorService } from '../services/error.service';
   standalone : false,
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit,AfterViewInit {
   loginForm!: FormGroup;
+  @ViewChild('usernameInput') usernameInput!: ElementRef;
   constructor(private fb: FormBuilder, private router: Router,private loginService: LoginService,
     private errorService: ErrorService
   ) {}
@@ -20,6 +21,12 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(6)]],
+    });
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.usernameInput?.nativeElement.focus();
     });
   }
 
@@ -35,6 +42,7 @@ export class LoginComponent implements OnInit {
       }).subscribe({
           next: (res) => {
             sessionStorage.setItem('token',res.token);
+            this.loginService.currentUser.next(res.user),
             this.router.navigateByUrl('/ideas-list');
           },
           error: (err) => {

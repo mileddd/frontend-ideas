@@ -16,8 +16,7 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private router: Router) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // If you store the token in localStorage
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
 
     let authReq = req;
     if (token) {
@@ -30,7 +29,7 @@ export class AuthInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401) {
           // Clear token
-          localStorage.removeItem('token');
+          sessionStorage.removeItem('token');
 
           // Redirect to login page
           this.router.navigate(['/login']);

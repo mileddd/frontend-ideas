@@ -1,0 +1,17 @@
+<nav class="bg-gradient-to-r from-indigo-600 to-cyan-400 text-white px-6 py-3 flex justify-between items-center">
+  <h1 class="text-xl font-semibold">Ideas Platform</h1>
+
+  <div *ngIf="user" class="flex items-center space-x-4">
+    <span>Welcome, <strong>{{ user.username }}</strong>!</span>
+
+    <!-- Logout button -->
+    <button
+      (click)="logout()"
+      class="flex items-center space-x-1 px-2 py-1 rounded hover:bg-white/20 transition"
+      title="Logout"
+    >
+      <span class="text-white text-lg">🔓</span>
+      <span class="hidden sm:inline text-white font-medium">Logout</span>
+    </button>
+  </div>
+</nav>

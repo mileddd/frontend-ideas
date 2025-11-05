@@ -1,12 +1,11 @@
-<!-- Full page -->
+<!-- Full Page with Minimal Header and Idea List -->
 <div class="min-h-screen bg-gray-50 flex flex-col">
 
-  <!-- Header -->
-  <header class="bg-blue-600 text-white py-4 px-8 shadow flex justify-between items-center">
-    <h1 class="text-2xl font-semibold">Idea List</h1>
+  <!-- Header with only Add button -->
+  <header class="shadow py-4 px-6 flex justify-end">
     <button
       (click)="openDialog()"
-      class="bg-white text-blue-600 px-4 py-2 rounded-lg shadow hover:bg-blue-50 transition font-medium"
+      class="bg-blue-600 text-white px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition font-medium"
     >
       + Add Idea
     </button>
@@ -17,7 +16,7 @@
     <section class="bg-white rounded-2xl shadow p-6">
       <h2 class="text-xl font-semibold mb-4 text-gray-800">All Ideas</h2>
 
-      <!-- Empty -->
+      <!-- Empty state -->
       <div *ngIf="ideas.length === 0" class="text-gray-500 italic text-center py-6">
         No ideas yet — click “Add Idea” to create one!
       </div>
@@ -39,9 +38,12 @@
 
           <!-- Vote controls -->
           <div class="flex flex-col items-center ml-6">
-             <button
+            <button
               (click)="upvoteIdea(idea)"
-              [class.text-emerald-500]="idea.userVote == 1"
+              [ngClass]="{
+                'text-emerald-500': idea.userVote == 1,
+                'text-gray-400': idea.userVote != 1
+              }"
               class="flex items-center gap-1 text-gray-400 hover:text-emerald-500 transition font-semibold"
             >
               👍 <span>Boost</span>
@@ -51,7 +53,10 @@
 
             <button
               (click)="downvoteIdea(idea)"
-              [class.text-rose-500]="idea.userVote == -1"
+              [ngClass]="{
+                'text-rose-500': idea.userVote == -1,
+                'text-gray-400': idea.userVote != -1
+              }"
               class="flex items-center gap-1 text-gray-400 hover:text-rose-500 transition font-semibold"
             >
               👎 <span>Pass</span>
@@ -64,8 +69,8 @@
 
   <!-- Modal Dialog -->
   <div
-  *ngIf="showDialog"
-  class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4"
+    *ngIf="showDialog"
+    class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4"
   >
     <div class="w-full max-w-3xl">
       <app-idea-form (save)="addIdea($event)" (close)="closeDialog()"></app-idea-form>

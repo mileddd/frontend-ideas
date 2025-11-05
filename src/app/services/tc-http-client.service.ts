@@ -30,12 +30,14 @@ export class TcHttpClient
     public put(url: string,body: {}): Observable<any>
     {
         let headers = new HttpHeaders();
+        headers = headers.set('Authorization',"Bearer "+sessionStorage.getItem('token'));
         return this._httpClient.put(url,body,{headers : headers});
     }
 
     public delete(url:string): Observable<any>
     {
         let headers = new HttpHeaders();
+        headers = headers.set('Authorization',"Bearer "+sessionStorage.getItem('token'));
         return this._httpClient.delete(url,{headers : headers});
     }
 }
